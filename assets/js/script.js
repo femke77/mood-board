@@ -45,7 +45,7 @@ function loadFromLocalStorage() {
       textDiv.style.top = text.top;
       textDiv.classList.add("text-item");
       moodBoardEl.appendChild(textDiv);
-
+      textDiv.id = text.id
       addDragListeners(textDiv);
     });
   }
@@ -72,7 +72,7 @@ addTextBtn.addEventListener("click", function () {
     textDiv.textContent = text;
     document.body.appendChild(textDiv);
     currentElement = textDiv;
-
+    textDiv.setAttribute("id", Math.ceil(Math.random() * 1000));
     attachMouseListeners();
   }
 });
@@ -121,6 +121,7 @@ function placeElementClickHandler(event) {
       });
     } else {
       tempStorageObject.text.push({
+        id: currentElement.id,
         text: currentElement.textContent,
         left: left,
         top: top,
@@ -161,20 +162,24 @@ function replaceElementClickHandler(e) {
     currentElement.style.top = top;
     currentElement.classList.remove("draggable");
     moodBoardEl.appendChild(currentElement);
-    console.log("current element needing update", currentElement.id);
- ;
-    // TODO: update the local storage
-    tempStorageObject.images.map((image) => {  
-    
-      if (image.id === currentElement.id) {
-        console.log("hit");
-        image.left = left;
-        image.top = top;
-      }
-      updateLocalStorage()
-    });
-    
 
+    if (currentElement.tagName === "IMG") {
+      tempStorageObject.images.map((image) => {
+        if (image.id === currentElement.id) {
+          image.left = left;
+          image.top = top;
+        }
+      });
+      updateLocalStorage();
+    } else {
+      tempStorageObject.text.map((text) => {
+        if (text.id === currentElement.id) {
+          text.left = left;
+          text.top = top;
+        }
+      });
+      updateLocalStorage();
+    }
 
 
     currentElement = null;
