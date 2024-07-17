@@ -152,6 +152,7 @@ function placeElementClickHandler(event) {
     updateLocalStorage();
     // currentElement.style.pointerEvents = "initial";
     // Reset current element
+    addDragListeners(currentElement);
     currentElement = null;
 
     // Clear inputs
@@ -160,7 +161,8 @@ function placeElementClickHandler(event) {
 
     // ? Remove event listeners for mouse move, so that the element is no longer draggable
     document.removeEventListener("mousemove", mouseMoveHandler);
-    // document.location.reload();   Can you get rid of this????
+
+    // document.location.reload();  
   }
 }
 function addDragListeners(element) {
@@ -169,8 +171,8 @@ function addDragListeners(element) {
   element.addEventListener("mousedown", function (event) {
     event.preventDefault();
     currentElement = element;
-    moodBoardEl.removeEventListener("click", placeElementClickHandler);
     document.addEventListener("mousemove", dragHandler);
+    moodBoardEl.removeEventListener("click", placeElementClickHandler);
     moodBoardEl.addEventListener("click", replaceElementClickHandler);
   });
 }
