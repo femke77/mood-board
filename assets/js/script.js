@@ -58,7 +58,6 @@ addImageBtn.addEventListener("click", function () {
   const imageUrl = imageUrlInput.value;
   if (imageUrl) {
     const img = document.createElement("img");
-    img.setAttribute('data-id', Math.floor(Math.random()* 1000));
     img.src = imageUrl;
     img.classList.add("draggable");
     document.body.appendChild(img);
@@ -91,6 +90,7 @@ addTextBtn.addEventListener("click", function () {
 
 function attachMouseListeners() {
   document.addEventListener("mousemove", mouseMoveHandler);
+  moodBoardEl.removeEventListener("click", replaceElementClickHandler);
   moodBoardEl.addEventListener("click", placeElementClickHandler);
 }
 
@@ -101,12 +101,7 @@ function mouseMoveHandler(e) {
     currentElement.style.left = `${e.clientX}px`;
     currentElement.style.top = `${e.clientY}px`;
 
-    console.log(
-      "left",
-      currentElement.style.left,
-      "top",
-      currentElement.style.top
-    );
+   
   }
 }
 function dragHandler(e) {
@@ -174,7 +169,7 @@ function addDragListeners(element) {
   element.addEventListener("mousedown", function (event) {
     event.preventDefault();
     currentElement = element;
-
+    moodBoardEl.removeEventListener("click", placeElementClickHandler);
     document.addEventListener("mousemove", dragHandler);
     moodBoardEl.addEventListener("click", replaceElementClickHandler);
   });
