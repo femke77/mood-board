@@ -45,7 +45,8 @@ function loadFromLocalStorage() {
       textDiv.style.top = text.top;
       textDiv.classList.add("text-item");
       moodBoardEl.appendChild(textDiv);
-      textDiv.id = text.id
+      textDiv.id = text.id;
+
       addDragListeners(textDiv);
     });
   }
@@ -127,17 +128,14 @@ function placeElementClickHandler(event) {
         top: top,
       });
     }
-
     updateLocalStorage();
 
     // immediately allow dragging the element for replacement
     addDragListeners(currentElement);
 
     currentElement = null;
-
     imageUrlInput.value = "";
     textInput.value = "";
-
     document.removeEventListener("mousemove", mouseMoveHandler);
   }
 }
@@ -170,7 +168,6 @@ function replaceElementClickHandler(e) {
           image.top = top;
         }
       });
-      updateLocalStorage();
     } else {
       tempStorageObject.text.map((text) => {
         if (text.id === currentElement.id) {
@@ -178,12 +175,9 @@ function replaceElementClickHandler(e) {
           text.top = top;
         }
       });
-      updateLocalStorage();
     }
-
-
+    updateLocalStorage();
     currentElement = null;
-
     document.removeEventListener("mousemove", mouseMoveHandler);
   }
 }
