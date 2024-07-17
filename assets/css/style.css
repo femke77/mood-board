@@ -53,14 +53,13 @@ button {
   max-width: 200px;
   max-height: 200px;
   cursor: pointer;
+  pointer-events: none;
 
   font-size: 2rem;
 
 }
 
-.draggable {
-  pointer-events: none;
-}
+
 
 #control-panel input[type="text"],
 button {
